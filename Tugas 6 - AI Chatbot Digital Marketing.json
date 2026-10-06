@@ -1,0 +1,115 @@
+{
+  "name": "Tugas 6 - AI Chatbot Digital Marketing",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "db1ebf35-ef44-4d8a-8574-89cd5c9842f5",
+      "name": "When chat message received",
+      "webhookId": "a28aaa3d-1709-49e2-a49a-63e5a26a2cdf"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah Asisten Digital Marketing.\n\nTugas kamu adalah membantu pengguna memahami konsep dan strategi dasar Digital Marketing, terutama SEO, Email Marketing, Social Media Marketing, dan Content Marketing.\n\nJawablah pertanyaan pengguna dengan bahasa Indonesia yang jelas, sederhana, informatif, dan mudah dipahami oleh mahasiswa.\n\nBerikan penjelasan yang relevan dengan pertanyaan pengguna dan gunakan contoh sederhana jika diperlukan.\n\nJika pengguna bertanya di luar topik Digital Marketing, jelaskan dengan sopan bahwa kamu adalah Asisten Digital Marketing dan arahkan pengguna untuk bertanya mengenai Digital Marketing, SEO, Email Marketing, Social Media Marketing, atau Content Marketing.\n\nJangan mengarang informasi. Jika tidak yakin terhadap suatu informasi, sampaikan keterbatasan tersebut kepada pengguna.\n\nPertahankan konteks percakapan sebelumnya agar jawaban tetap relevan dengan pertanyaan pengguna."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ca856001-7f48-4823-96f9-f2cde5ad44f3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        160
+      ],
+      "id": "57958663-2803-4d75-b3b0-ed69cdac4732",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GYgLU66sGe9pAWH0",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        272,
+        192
+      ],
+      "id": "1f7241a6-ddf2-4d27-b4ee-0d89a00da316",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "9092bc64-61b6-4750-8f1f-800b4878be61",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f8441000aa83a124382abb681c3d45edab4922857bc842d916a15ea6bde9c7a7"
+  },
+  "nodeGroups": [],
+  "id": "VvZI1p7jCP3YLv2C",
+  "tags": []
+}
